@@ -1,0 +1,25 @@
+{
+  "name": "lire-node-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "package.json",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samsonlewin/lire-node-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/samsonlewin/lire-node-app/issues"
+  },
+  "homepage": "https://github.com/samsonlewin/lire-node-app#readme",
+  "dependencies": {
+    "express": "^4.15.2",
+    "request": "^2.81.0",
+    "spotify": "^0.3.0",
+    "twitter": "^1.7.0"
+  }
+}
