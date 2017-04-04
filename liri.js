@@ -76,11 +76,6 @@ omdbFunction(inputName);
 
 
 
-
-
-
-
-
 //============================
 // function that allow to take multiple words in the input
 
@@ -116,21 +111,38 @@ function spotifyFunction(value){
   var songUrl = "https://api.spotify.com/v1/tracks/0hrBpAOgrt8RXigk83LLNE";
     request(songUrl, function(error, response, body) {
 
-    console.log("===============================");
-    console.log("Artist Name: " + JSON.parse(body).artists[0].name);
-    console.log("Song Name: "+ JSON.parse(body).name);
-    console.log("Preview: "+ JSON.parse(body).preview_url);
-    console.log("Album Name: "+ JSON.parse(body).album.name);
-    console.log("===============================");
+    var errorSpotifyLog = ["===============================",
+    "Your song on Spotify",
+    "Artist Name: " + JSON.parse(body).artists[0].name,
+    "Song Name: "+ JSON.parse(body).name,
+    "Preview: "+ JSON.parse(body).preview_url,
+    "Album Name: "+ JSON.parse(body).album.name,
+    "==============================="
+    ];
+
+    for (var i=0; i<errorSpotifyLog.length; i++){
+          fs.appendFile("log.txt",errorSpotifyLog[i]+"\n",function(err){
+          });
+          console.log(errorSpotifyLog[i]);
+    };
+  
 });
 }else{
+
+  var spotifylogText = ["===============================",
+  "Your song on Spotify",
+  "Artist Name: " + data.tracks.items[0].artists[0].name,
+  "Song Name: "+ data.tracks.items[0].name,
+  "Preview: "+ data.tracks.items[0].preview_url,
+  "Album Name: "+ data.tracks.items[0].album.name,
+  "==============================="
+  ]
  
-    console.log("===============================");
-    console.log("Artist Name: " + data.tracks.items[0].artists[0].name);
-    console.log("Song Name: "+ data.tracks.items[0].name);
-    console.log("Preview: "+ data.tracks.items[0].preview_url);
-    console.log("Album Name: "+ data.tracks.items[0].album.name);
-    console.log("===============================");
+ for (var i=0; i<spotifylogText.length; i++){
+          fs.appendFile("log.txt",spotifylogText[i]+"\n",function(err){
+          });
+          console.log(spotifylogText[i]);
+    };
 
 }
 });
@@ -149,17 +161,27 @@ if(value === ""){
 //If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
 queryUrl = "http://www.omdbapi.com/?t=mr+nobody&y=&plot=short&r=json"
 request(queryUrl, function(error, response, body) {
-    console.log("===============================");
-    console.log("Title: " + JSON.parse(body).Title);
-    console.log("Release Year: " + JSON.parse(body).Year);
-    console.log("Rating: " + JSON.parse(body).imdbRating);
-    console.log("Country of production: " + JSON.parse(body).Country);
-    console.log("Language: " + JSON.parse(body).Language);
-    console.log("Plot: " + JSON.parse(body).Plot);
-    console.log("Actors: " + JSON.parse(body).Actors);
-    console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
-    console.log("https://www.rottentomatoes.com/m/"+value)
-    console.log("===============================");
+
+  var errorOmdbLog =["===============================",
+  "Your movie on OMDB",
+  "Title: " + JSON.parse(body).Title,
+  "Release Year: " + JSON.parse(body).Year,
+  "Rating: " + JSON.parse(body).imdbRating,
+  "Country of production: " + JSON.parse(body).Country,
+  "Language: " + JSON.parse(body).Language,
+  "Plot: " + JSON.parse(body).Plot,
+  "Actors: " + JSON.parse(body).Actors,
+  "Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value,
+  "https://www.rottentomatoes.com/m/"+value,
+  "==============================="
+  ];
+
+for (var i=0; i<errorOmdbLog.length; i++){
+          fs.appendFile("log.txt",errorOmdbLog[i]+"\n",function(err){
+          });
+          console.log(errorOmdbLog[i]);
+    };
+
   });
   }else{
 
@@ -168,18 +190,27 @@ request(queryUrl, function(error, response, body) {
 
   if (!error && response.statusCode === 200) {
 
+    var omdblogText = ["===============================",
+    "Your movie on OMDB",
+    "Title: " + JSON.parse(body).Title,
+     "Release Year: " + JSON.parse(body).Year,
+      "Rating: " + JSON.parse(body).imdbRating, 
+      "Country of production: " + JSON.parse(body).Country,
+      "Language: " + JSON.parse(body).Language,
+      "Plot: " + JSON.parse(body).Plot,
+      "Actors: " + JSON.parse(body).Actors,
+      "Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value,
+      "https://www.rottentomatoes.com/m/"+value,
+      "==============================="
+    ];
 
-    console.log("===============================");
-    console.log("Title: " + JSON.parse(body).Title);
-    console.log("Release Year: " + JSON.parse(body).Year);
-    console.log("Rating: " + JSON.parse(body).imdbRating);
-    console.log("Country of production: " + JSON.parse(body).Country);
-    console.log("Language: " + JSON.parse(body).Language);
-    console.log("Plot: " + JSON.parse(body).Plot);
-    console.log("Actors: " + JSON.parse(body).Actors);
-    console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
-    console.log("https://www.rottentomatoes.com/m/"+value)
-    console.log("===============================");
+    for (var i=0; i<omdblogText.length; i++){
+          fs.appendFile("log.txt",omdblogText[i]+"\n",function(err){
+          });
+          console.log(omdblogText[i]);
+    };
+
+
   
   }
   
@@ -193,15 +224,25 @@ function twitterFunction(){
 var params = {screen_name: 'nodejs'};
 client.get('statuses/user_timeline', params, function(error, tweets, response) {
   if (!error) {
+
     for (var i=0; i<20; i++){
-    console.log("===============================");
-    console.log(tweets[i].created_at);
-    console.log(tweets[i].text);
-    console.log("===============================");
+
+    var twitterLogText = ["===============================",
+    "My Tweets",
+    tweets[i].created_at,
+    tweets[i].text,
+    "==============================="
+    ];
+
+          fs.appendFile("log.txt",twitterLogText[i]+"\n",function(err){
+          });
+          console.log(twitterLogText[i]);
+    
 };
   }
 });
 };
+
 
 
 
