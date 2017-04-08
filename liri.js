@@ -48,7 +48,8 @@ omdbFunction(pretierData[1]);
 
 //This will show your last 20 tweets and when they were created at in your terminal/bash window
 if(command ==="my-tweets"){
-twitterFunction();
+  console.log("This happens");
+  twitterFunction();
 }
 
 //============================ song query 
@@ -220,12 +221,14 @@ request(queryUrl, function(error, response, body) {
 
 //============================
 //twitter function
+//This will show your last 20 tweets and when they were created at in your terminal/bash window
 function twitterFunction(){
-var params = {screen_name: 'nodejs'};
+var params = {screen_name: 'realDonladTrump'};
 client.get('statuses/user_timeline', params, function(error, tweets, response) {
   if (!error) {
 
     for (var i=0; i<20; i++){
+
 
     var twitterLogText = ["===============================",
     "My Tweets",
@@ -236,7 +239,7 @@ client.get('statuses/user_timeline', params, function(error, tweets, response) {
 
           fs.appendFile("log.txt",twitterLogText[i]+"\n",function(err){
           });
-          console.log(twitterLogText[i]);
+         console.log(twitterLogText.join("\n"));
     
 };
   }
