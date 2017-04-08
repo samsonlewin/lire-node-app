@@ -48,7 +48,6 @@ omdbFunction(pretierData[1]);
 
 //This will show your last 20 tweets and when they were created at in your terminal/bash window
 if(command ==="my-tweets"){
-  console.log("This happens");
   twitterFunction();
 }
 
