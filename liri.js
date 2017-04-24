@@ -19,6 +19,11 @@ var inputName = "";
 
 //take the text inside of random.txt and then use it to call one of LIRI's commands.
 
+// I know it can seem silly to care about indentation, but the parsing benefit you get from it
+// really is worth it. You can immediately break your code down into smaller blocks and understand what
+// is contained within what. Also, you should consider wrapping this code in a function - main benefit
+// to that is reusability 🙌
+
 if  (command ==="do-what-it-says"){
 fs.readFile('random.txt','utf8',function(err, data){
   var pretierData = data.split(',');
@@ -82,6 +87,10 @@ omdbFunction(inputName);
 function theInputName(){
 
   var nodeArgs = process.argv;
+  // since nodeArgs is an array, you can actually achieve the same result with the following line of code
+  // inputName = nodeArgs.slice(3).join('+')
+  // you can read up more on the `.slice` method here: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice?v=example
+
   for (var i = 3; i < nodeArgs.length; i++) {
 
   if (i > 3 && i < nodeArgs.length) {
@@ -111,12 +120,16 @@ function spotifyFunction(value){
   var songUrl = "https://api.spotify.com/v1/tracks/0hrBpAOgrt8RXigk83LLNE";
     request(songUrl, function(error, response, body) {
 
+    // Instead of repeatedly parsing the body, you can simply redefine the body as it's parsed result
+    body = JSON.parse(body)
+    // and then you can save yourself a few key strokes and a few computing cycles like so:
+
     var errorSpotifyLog = ["===============================",
     "Your song on Spotify",
-    "Artist Name: " + JSON.parse(body).artists[0].name,
-    "Song Name: "+ JSON.parse(body).name,
-    "Preview: "+ JSON.parse(body).preview_url,
-    "Album Name: "+ JSON.parse(body).album.name,
+    "Artist Name: " + body.artists[0].name,
+    "Song Name: "+ body.name,
+    "Preview: "+ body.preview_url,
+    "Album Name: "+ body.album.name,
     "==============================="
     ];
 
@@ -129,12 +142,16 @@ function spotifyFunction(value){
 });
 }else{
 
+  // when you find yourself accessing such a deeply nested piece of data
+  // you can go ahead and assign it to a variable for the sake of readability
+  var track = data.tracks.items[0]
+
   var spotifylogText = ["===============================",
   "Your song on Spotify",
-  "Artist Name: " + data.tracks.items[0].artists[0].name,
-  "Song Name: "+ data.tracks.items[0].name,
-  "Preview: "+ data.tracks.items[0].preview_url,
-  "Album Name: "+ data.tracks.items[0].album.name,
+  "Artist Name: " + track.artists[0].name,
+  "Song Name: "+ track.name,
+  "Preview: "+ track.preview_url,
+  "Album Name: "+ track.album.name,
   "==============================="
   ]
  
@@ -162,16 +179,18 @@ if(value === ""){
 queryUrl = "http://www.omdbapi.com/?t=mr+nobody&y=&plot=short&r=json"
 request(queryUrl, function(error, response, body) {
 
+  body = JSON.parse(body)
+
   var errorOmdbLog =["===============================",
   "Your movie on OMDB",
-  "Title: " + JSON.parse(body).Title,
-  "Release Year: " + JSON.parse(body).Year,
-  "Rating: " + JSON.parse(body).imdbRating,
-  "Country of production: " + JSON.parse(body).Country,
-  "Language: " + JSON.parse(body).Language,
-  "Plot: " + JSON.parse(body).Plot,
-  "Actors: " + JSON.parse(body).Actors,
-  "Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value,
+  "Title: " + body.Title,
+  "Release Year: " + body.Year,
+  "Rating: " + body.imdbRating,
+  "Country of production: " + body.Country,
+  "Language: " + body.Language,
+  "Plot: " + body.Plot,
+  "Actors: " + body.Actors,
+  "Rotten Tomatoes Rating: " + body.Ratings[1].Value,
   "https://www.rottentomatoes.com/m/"+value,
   "==============================="
   ];
@@ -190,16 +209,18 @@ request(queryUrl, function(error, response, body) {
 
   if (!error && response.statusCode === 200) {
 
+    body = JSON.parse(body)
+
     var omdblogText = ["===============================",
     "Your movie on OMDB",
-    "Title: " + JSON.parse(body).Title,
-     "Release Year: " + JSON.parse(body).Year,
-      "Rating: " + JSON.parse(body).imdbRating, 
-      "Country of production: " + JSON.parse(body).Country,
-      "Language: " + JSON.parse(body).Language,
-      "Plot: " + JSON.parse(body).Plot,
-      "Actors: " + JSON.parse(body).Actors,
-      "Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value,
+    "Title: " + body.Title,
+     "Release Year: " + body.Year,
+      "Rating: " + body.imdbRating, 
+      "Country of production: " + body.Country,
+      "Language: " + body.Language,
+      "Plot: " + body.Plot,
+      "Actors: " + body.Actors,
+      "Rotten Tomatoes Rating: " + body.Ratings[1].Value,
       "https://www.rottentomatoes.com/m/"+value,
       "==============================="
     ];

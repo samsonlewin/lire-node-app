@@ -1,0 +1,2 @@
+# You don't generally want to commit your log files to git
+log.txt
